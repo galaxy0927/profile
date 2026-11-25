@@ -5,14 +5,28 @@
   <meta charset="UTF-8">
   <!-- 휴대폰 화면 크기에 맞게 웹페이지 비율을 자동으로 맞춰주는 설정 -->
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>컴퓨터공학과 신입생 자기소개</title>
+  <title>이정욱 · 자기소개</title>
+  <!-- 새로고침 시 화면이 잠깐 밝게 깜빡이지 않도록 저장된 다크모드를 먼저 적용 -->
+  <script>
+    try {
+      if (localStorage.getItem("profile-theme") === "dark") {
+        document.documentElement.setAttribute("data-theme", "dark");
+      }
+    } catch (error) {
+      // 브라우저 저장소 접근이 제한된 경우 기본 모드를 유지합니다.
+    }
+  </script>
   <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
   <div class="page-wrapper">
-    <!-- 상단 우측 다크모드 전환 버튼 영역 -->
+    <!-- 페이지 맨 위: 타이핑 인사말 + 우측 다크모드 전환 버튼 -->
     <div class="top-bar">
+      <p class="typing-greeting" aria-live="polite">
+        <span id="typingText"></span><span class="typing-cursor" aria-hidden="true">|</span>
+      </p>
+
       <button type="button" id="themeToggle" class="theme-toggle" aria-label="다크모드 전환" aria-pressed="false">
         <span class="theme-icon" id="themeIcon" aria-hidden="true">🌙</span>
         <span class="theme-label" id="themeLabel">다크 모드</span>
@@ -24,47 +38,83 @@
       <div class="avatar-frame" role="img" aria-label="프로필 이모지">
         <span class="avatar-emoji">🧑‍💻</span>
       </div>
-      <span class="student-badge">컴퓨터공학과 신입생</span>
+      <span class="student-badge">컴퓨터공학과 4학년</span>
       <h1 class="profile-name">이정욱</h1>
       <p class="profile-tagline">
-        코드로 작은 아이디어를 현실로 만드는 즐거움을 배워가고 있는 신입생입니다.
+        영진전문대학교 컴퓨터공학과 4학년 재학중
       </p>
     </header>
 
     <main class="main-content">
-      <!-- 관심 분야 섹션: 카드 3개 -->
+      <!-- 관심 분야 섹션: 클릭하면 아래에 설명이 펼쳐지는 카드 3개 -->
       <section class="section" aria-labelledby="interestsTitle">
         <div class="section-header">
           <h2 id="interestsTitle" class="section-title">관심 분야</h2>
-          <p class="section-subtitle">대학 생활 동안 깊이 탐구해보고 싶은 3가지 분야입니다.</p>
+          <p class="section-subtitle">카드를 클릭하면 아래에 자세한 설명이 펼쳐집니다.</p>
         </div>
 
         <div class="card-grid">
           <article class="interest-card">
-            <div class="card-icon" aria-hidden="true">🌐</div>
-            <h3 class="card-title">웹 개발</h3>
-            <p class="card-desc">
-              누구나 브라우저로 쉽게 사용할 수 있는 깔끔하고 편리한 웹 서비스를 직접 설계하고 구현해보고 싶습니다.
-            </p>
-            <span class="card-tag">HTML · CSS · JS</span>
+            <button type="button" class="card-toggle" aria-expanded="false" aria-controls="desc-web">
+              <div class="card-top-row">
+                <div class="card-icon" aria-hidden="true">🌐</div>
+                <span class="card-arrow" aria-hidden="true">▾</span>
+              </div>
+              <h3 class="card-title">웹 개발</h3>
+              <div class="card-meta">
+                <span class="card-tag">HTML · CSS · JS</span>
+                <span class="card-hint">자세히 보기</span>
+              </div>
+            </button>
+            <div class="card-details" id="desc-web">
+              <div class="card-details-inner">
+                <p class="card-desc">
+                  누구나 브라우저로 쉽게 사용할 수 있는 깔끔하고 편리한 웹 서비스를 직접 설계하고 구현해보고 싶습니다.
+                </p>
+              </div>
+            </div>
           </article>
 
           <article class="interest-card">
-            <div class="card-icon" aria-hidden="true">🤖</div>
-            <h3 class="card-title">인공지능</h3>
-            <p class="card-desc">
-              데이터를 학습해 스스로 패턴을 찾고 문제를 해결하는 머신러닝과 딥러닝의 기초 원리가 궁금합니다.
-            </p>
-            <span class="card-tag">AI · 머신러닝</span>
+            <button type="button" class="card-toggle" aria-expanded="false" aria-controls="desc-ai">
+              <div class="card-top-row">
+                <div class="card-icon" aria-hidden="true">🤖</div>
+                <span class="card-arrow" aria-hidden="true">▾</span>
+              </div>
+              <h3 class="card-title">인공지능</h3>
+              <div class="card-meta">
+                <span class="card-tag">AI · 머신러닝</span>
+                <span class="card-hint">자세히 보기</span>
+              </div>
+            </button>
+            <div class="card-details" id="desc-ai">
+              <div class="card-details-inner">
+                <p class="card-desc">
+                  데이터를 학습해 스스로 패턴을 찾고 문제를 해결하는 머신러닝과 딥러닝의 기초 원리가 궁금합니다.
+                </p>
+              </div>
+            </div>
           </article>
 
           <article class="interest-card">
-            <div class="card-icon" aria-hidden="true">🎮</div>
-            <h3 class="card-title">게임</h3>
-            <p class="card-desc">
-              플레이어가 몰입할 수 있는 재미있는 게임 규칙을 고민하고, 간단한 미니게임부터 직접 만들어보고 싶습니다.
-            </p>
-            <span class="card-tag">게임 로직 · 인터랙션</span>
+            <button type="button" class="card-toggle" aria-expanded="false" aria-controls="desc-game">
+              <div class="card-top-row">
+                <div class="card-icon" aria-hidden="true">🎮</div>
+                <span class="card-arrow" aria-hidden="true">▾</span>
+              </div>
+              <h3 class="card-title">게임</h3>
+              <div class="card-meta">
+                <span class="card-tag">게임 로직 · 인터랙션</span>
+                <span class="card-hint">자세히 보기</span>
+              </div>
+            </button>
+            <div class="card-details" id="desc-game">
+              <div class="card-details-inner">
+                <p class="card-desc">
+                  플레이어가 몰입할 수 있는 재미있는 게임 규칙을 고민하고, 간단한 미니게임부터 직접 만들어보고 싶습니다.
+                </p>
+              </div>
+            </div>
           </article>
         </div>
       </section>
@@ -131,7 +181,7 @@
           <span>github.com/your-username</span>
         </a>
       </div>
-      <p class="copyright">© 2026 김코딩 · 컴퓨터공학과 신입생 포트폴리오</p>
+      <p class="copyright">© 2026 이정욱 · 영진전문대학교 컴퓨터공학과</p>
     </footer>
   </div>
 

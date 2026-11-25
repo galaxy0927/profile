@@ -2,12 +2,63 @@
 const THEME_STORAGE_KEY = "profile-theme";
 const GOALS_STORAGE_KEY = "profile-goals";
 
+// 상단 타자기 인사말 문구와 출력 속도(밀리초)
+const GREETING_MESSAGE = "안녕하세요! 이정욱의 자기소개 페이지에 오신 걸 환영합니다 👋";
+const TYPING_SPEED_MS = 70;
+
 // 화면에서 조작할 HTML 요소들 가져오기
+const typingTextElement = document.getElementById("typingText");
 const themeToggleBtn = document.getElementById("themeToggle");
 const themeIcon = document.getElementById("themeIcon");
 const themeLabel = document.getElementById("themeLabel");
+const interestCards = document.querySelectorAll(".interest-card");
 const goalCheckboxes = document.querySelectorAll(".goal-checkbox");
 const goalProgressBadge = document.getElementById("goalProgress");
+
+/**
+ * localStorage에서 안전하게 값을 읽어옵니다.
+ */
+function getStoredValue(key) {
+  try {
+    return localStorage.getItem(key);
+  } catch (error) {
+    return null;
+  }
+}
+
+/**
+ * localStorage에 안전하게 값을 저장합니다.
+ */
+function setStoredValue(key, value) {
+  try {
+    localStorage.setItem(key, value);
+  } catch (error) {
+    // 저장소 사용이 제한된 브라우저 환경에서는 오류 없이 넘어갑니다.
+  }
+}
+
+/**
+ * 페이지 맨 위 인사말을 타자 치듯 한 글자씩 출력합니다.
+ */
+function startTypingGreeting() {
+  if (!typingTextElement) return;
+
+  // 이모지가 깨지지 않도록 문자열을 글자 단위 배열로 나눕니다.
+  const characters = Array.from(GREETING_MESSAGE);
+  let currentIndex = 0;
+
+  typingTextElement.textContent = "";
+
+  function typeNextChar() {
+    if (currentIndex >= characters.length) return;
+
+    typingTextElement.textContent += characters[currentIndex];
+    currentIndex += 1;
+    setTimeout(typeNextChar, TYPING_SPEED_MS);
+  }
+
+  typeNextChar();
+}
 
 /**
  * 선택한 테마("light" 또는 "dark")를 화면에 적용합니다.
@@ -32,7 +83,7 @@ function applyTheme(theme) {
  * 저장된 테마가 있으면 불러오고, 없으면 기본 일반 모드를 적용합니다.
  */
 function initTheme() {
-  const savedTheme = localStorage.getItem(THEME_STORAGE_KEY);
+  const savedTheme = getStoredValue(THEME_STORAGE_KEY);
   applyTheme(savedTheme === "dark" ? "dark" : "light");
 }
 
@@ -43,7 +94,28 @@ function handleThemeToggle() {
   const isCurrentlyDark = document.documentElement.getAttribute("data-theme") === "dark";
   const nextTheme = isCurrentlyDark ? "light" : "dark";
   applyTheme(nextTheme);
-  localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
+  setStoredValue(THEME_STORAGE_KEY, nextTheme);
+}
+
+/**
+ * 관심 분야 카드를 클릭할 때 아래 설명이 펼쳐지거나 접히도록 설정합니다.
+ */
+function initInterestCards() {
+  interestCards.forEach((card) => {
+    const toggleBtn = card.querySelector(".card-toggle");
+    const hintText = card.querySelector(".card-hint");
+
+    if (!toggleBtn) return;
+
+    toggleBtn.addEventListener("click", () => {
+      const isOpen = card.classList.toggle("is-open");
+      toggleBtn.setAttribute("aria-expanded", String(isOpen));
+
+      if (hintText) {
+        hintText.textContent = isOpen ? "접기" : "자세히 보기";
+      }
+    });
+  });
 }
 
 /**
@@ -70,14 +142,14 @@ function saveGoalStates() {
   goalCheckboxes.forEach((checkbox) => {
     states[checkbox.dataset.goalId] = checkbox.checked;
   });
-  localStorage.setItem(GOALS_STORAGE_KEY, JSON.stringify(states));
+  setStoredValue(GOALS_STORAGE_KEY, JSON.stringify(states));
 }
 
 /**
  * 저장된 목표 체크 상태가 있다면 페이지 열 때 복원합니다.
  */
 function initGoals() {
-  const savedData = localStorage.getItem(GOALS_STORAGE_KEY);
+  const savedData = getStoredValue(GOALS_STORAGE_KEY);
 
   if (savedData) {
     try {
@@ -90,7 +162,11 @@ function initGoals() {
       });
     } catch (error) {
       // 저장된 값이 깨져 있으면 기본 상태를 유지합니다.
-      localStorage.removeItem(GOALS_STORAGE_KEY);
+      try {
+        localStorage.removeItem(GOALS_STORAGE_KEY);
+      } catch (removeError) {
+        // 무시
+      }
     }
   }
 
@@ -109,4 +185,6 @@ goalCheckboxes.forEach((checkbox) => {
 
 // 페이지 최초 실행 시 초기화
 initTheme();
+initInterestCards();
 initGoals();
+startTypingGreeting();
