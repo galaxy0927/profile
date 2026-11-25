@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <!-- 휴대폰 화면 크기에 맞게 웹페이지 비율을 자동으로 맞춰주는 설정 -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>컴퓨터공학과 신입생 자기소개</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+  <div class="page-wrapper">
+    <!-- 상단 우측 다크모드 전환 버튼 영역 -->
+    <div class="top-bar">
+      <button type="button" id="themeToggle" class="theme-toggle" aria-label="다크모드 전환" aria-pressed="false">
+        <span class="theme-icon" id="themeIcon" aria-hidden="true">🌙</span>
+        <span class="theme-label" id="themeLabel">다크 모드</span>
+      </button>
+    </div>
+
+    <!-- 상단 프로필 소개 영역 -->
+    <header class="profile-header">
+      <div class="avatar-frame" role="img" aria-label="프로필 이모지">
+        <span class="avatar-emoji">🧑‍💻</span>
+      </div>
+      <span class="student-badge">컴퓨터공학과 신입생</span>
+      <h1 class="profile-name">이정욱</h1>
+      <p class="profile-tagline">
+        코드로 작은 아이디어를 현실로 만드는 즐거움을 배워가고 있는 신입생입니다.
+      </p>
+    </header>
+
+    <main class="main-content">
+      <!-- 관심 분야 섹션: 카드 3개 -->
+      <section class="section" aria-labelledby="interestsTitle">
+        <div class="section-header">
+          <h2 id="interestsTitle" class="section-title">관심 분야</h2>
+          <p class="section-subtitle">대학 생활 동안 깊이 탐구해보고 싶은 3가지 분야입니다.</p>
+        </div>
+
+        <div class="card-grid">
+          <article class="interest-card">
+            <div class="card-icon" aria-hidden="true">🌐</div>
+            <h3 class="card-title">웹 개발</h3>
+            <p class="card-desc">
+              누구나 브라우저로 쉽게 사용할 수 있는 깔끔하고 편리한 웹 서비스를 직접 설계하고 구현해보고 싶습니다.
+            </p>
+            <span class="card-tag">HTML · CSS · JS</span>
+          </article>
+
+          <article class="interest-card">
+            <div class="card-icon" aria-hidden="true">🤖</div>
+            <h3 class="card-title">인공지능</h3>
+            <p class="card-desc">
+              데이터를 학습해 스스로 패턴을 찾고 문제를 해결하는 머신러닝과 딥러닝의 기초 원리가 궁금합니다.
+            </p>
+            <span class="card-tag">AI · 머신러닝</span>
+          </article>
+
+          <article class="interest-card">
+            <div class="card-icon" aria-hidden="true">🎮</div>
+            <h3 class="card-title">게임</h3>
+            <p class="card-desc">
+              플레이어가 몰입할 수 있는 재미있는 게임 규칙을 고민하고, 간단한 미니게임부터 직접 만들어보고 싶습니다.
+            </p>
+            <span class="card-tag">게임 로직 · 인터랙션</span>
+          </article>
+        </div>
+      </section>
+
+      <!-- 올해 목표 섹션: 체크리스트 5개 -->
+      <section class="section" aria-labelledby="goalsTitle">
+        <div class="section-header section-header-row">
+          <div>
+            <h2 id="goalsTitle" class="section-title">올해 목표</h2>
+            <p class="section-subtitle">항목을 클릭하면 달성 상태를 체크하고 저장할 수 있어요.</p>
+          </div>
+          <span class="progress-badge" id="goalProgress" aria-live="polite">1 / 5 달성</span>
+        </div>
+
+        <ul class="checklist" id="goalChecklist">
+          <li class="checklist-item">
+            <label class="checklist-label">
+              <input type="checkbox" class="goal-checkbox" data-goal-id="goal-1" checked>
+              <span class="custom-checkbox" aria-hidden="true"></span>
+              <span class="goal-text">HTML, CSS, JavaScript로 나만의 자기소개 웹페이지 완성하기</span>
+            </label>
+          </li>
+          <li class="checklist-item">
+            <label class="checklist-label">
+              <input type="checkbox" class="goal-checkbox" data-goal-id="goal-2">
+              <span class="custom-checkbox" aria-hidden="true"></span>
+              <span class="goal-text">C언어와 파이썬 기초 문법 탄탄하게 익히기</span>
+            </label>
+          </li>
+          <li class="checklist-item">
+            <label class="checklist-label">
+              <input type="checkbox" class="goal-checkbox" data-goal-id="goal-3">
+              <span class="custom-checkbox" aria-hidden="true"></span>
+              <span class="goal-text">백준·프로그래머스 알고리즘 문제 100개 이상 풀어보기</span>
+            </label>
+          </li>
+          <li class="checklist-item">
+            <label class="checklist-label">
+              <input type="checkbox" class="goal-checkbox" data-goal-id="goal-4">
+              <span class="custom-checkbox" aria-hidden="true"></span>
+              <span class="goal-text">Git과 GitHub로 매일 학습 기록 남기는 습관 들이기</span>
+            </label>
+          </li>
+          <li class="checklist-item">
+            <label class="checklist-label">
+              <input type="checkbox" class="goal-checkbox" data-goal-id="goal-5">
+              <span class="custom-checkbox" aria-hidden="true"></span>
+              <span class="goal-text">학과 동아리 또는 해커톤에서 팀 프로젝트 경험해보기</span>
+            </label>
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <!-- 하단 연락처 및 링크 영역 -->
+    <footer class="profile-footer">
+      <div class="contact-links">
+        <a class="contact-link" href="mailto:your-email@example.com">
+          <span aria-hidden="true">✉️</span>
+          <span>your-email@example.com</span>
+        </a>
+        <a class="contact-link" href="https://github.com/your-username" target="_blank" rel="noopener noreferrer">
+          <span aria-hidden="true">💻</span>
+          <span>github.com/your-username</span>
+        </a>
+      </div>
+      <p class="copyright">© 2026 김코딩 · 컴퓨터공학과 신입생 포트폴리오</p>
+    </footer>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+
+</html>
